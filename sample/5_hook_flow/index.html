@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<title>Document</title>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script type="text/babel">
+  const app = document.getElementById("app")
+  const root = ReactDOM.createRoot(app)
+
+  const Child = () => {
+
+    console.log('-->child render start')
+
+    const [type, setType] = React.useState(() => {
+      console.log('-->child type state')
+      return "window"
+    })
+
+    React.useEffect(() => {
+      console.log('-->child effect')
+      return () => {
+        console.log('-->child effect clean-up')
+      }
+    }, [type])
+
+    const list = ['window', 'mac']
+
+
+    console.log('-->child render end')
+
+    return (
+      <div>
+      {
+        list.map(item => (
+        <>
+          <input id={item} name="type" type="radio" value={item} onChange={event => setType(event.target.value)} checked={item === type}/>
+          <label for={item} children={item} />
+        </>
+       ))
+      }
+    </div>)
+  }
+
+  const ChildMemo = React.memo(Child)
+  
+  const App = () => {
+    console.log('APP render start')
+
+    const [key, setKey] = React.useState(() => {
+      console.log('APP key state')
+      return ""
+    })
+
+    const [show, setShow] = React.useState(() => {
+      console.log('APP show state')
+      return false
+    })
+
+
+    React.useEffect(() => {
+      console.log('APP effect')
+      return () => {
+        console.log('APP effect clean-up')
+      }
+    }, [key, show])
+
+
+    console.log('APP render end')
+    
+    return (
+      <>
+        <h1>SAMPLE</h1>
+        
+        <input id="show" type="checkbox" onChange={event => setShow(event.target.checked)} />
+        <label for="show" children="숨김 처리 여부" />
+        {show === true ? <ChildMemo/> : null}
+
+        <div>
+          <input onInput={event => setKey(event.target.value)} />
+        </div>
+      </>
+  )} 
+
+
+  root.render(<App/>)
+</script>
+</body>
+</html>
