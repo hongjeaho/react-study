@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    .box {
+      position: absolute;
+      border: 1px solid rosybrown;
+      width: 60%;
+      height: 50%;
+      top:50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: azure;
+      z-index: 99;
+    }
+    .dimmed {
+      position: fixed;
+      top:0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: lightslategray;
+      
+    }
+  </style>
+<title>Document</title>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script type="text/babel">
+  const app = document.getElementById("app")
+  const root = ReactDOM.createRoot(app)
+  
+  const Dialog = ({open, close, children}) => {
+    return open && 
+      <>
+        <div className="box">
+          {children}
+          <div style={{textAlign:'center'}}>
+            <button onClick={close}>닫기</button>
+          </div>
+        </div>
+        <div className="dimmed"></div>
+      </>
+  }
+
+  const HelloDialog = ({open, close}) => {
+    return (
+      <Dialog open={open} close={close}>
+      <h1>Hello</h1>
+      <h2>Composition Dialog Test</h2>
+    </Dialog>)
+  }
+
+  const Element = () => {
+    const [helloOpen, setHelloOpen] = React.useState(false);
+    const closeHelloOpen = () => {
+      setHelloOpen(false)
+    }
+
+    return (<>
+      <div>
+        <button onClick={() => setHelloOpen(true)}>-open- {helloOpen}</button>
+      </div>
+      <HelloDialog open={helloOpen} close={closeHelloOpen} />
+    </>)
+  }
+
+  root.render(<Element />)
+</script>
+</body>
+</html>
