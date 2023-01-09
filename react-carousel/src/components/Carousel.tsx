@@ -118,7 +118,7 @@ const Carousel: React.FC<Props> = () => {
   return (
     <>
         <Container onMouseEnter={doMouseEnter} onMouseLeave={doMouseLave}>
-          <ArrowButton pos='left' onClick={doNext}>
+          <ArrowButton pos='left' onClick={doPre}>
             <RiArrowDropLeftLine />
           </ArrowButton>
           <CarouselList>
@@ -126,7 +126,7 @@ const Carousel: React.FC<Props> = () => {
               <img src={item.imagePath} alt={item.title}  />
             </CarouselItem>)}
           </CarouselList>
-          <ArrowButton pos='right' onClick={doPre}>
+          <ArrowButton pos='right' onClick={doNext}>
             <RiArrowDropRightLine />
           </ArrowButton>
           <Nav>
