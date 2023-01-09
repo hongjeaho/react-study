@@ -1,2 +1,2 @@
 .vscode/extensions.json
-react-skeleton/node_modules
+**/node_modules
